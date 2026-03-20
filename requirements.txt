@@ -1,0 +1,9 @@
+# dependencies for the project
+streamlit
+pandas
+numpy
+matplotlib
+scikit-learn
+seaborn
+tsfresh
+prophet
