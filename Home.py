@@ -15,8 +15,10 @@ st.set_page_config(
 BASE      = os.path.dirname(os.path.abspath(__file__))
 M1_PAGE   = "pages/1preprocessing.py"
 M2_PAGE   = "pages/2clustring.py"
+M3_PAGE   = "pages/3anomaly_detector.py"
 M1_EXISTS = os.path.isfile(os.path.join(BASE, M1_PAGE))
 M2_EXISTS = os.path.isfile(os.path.join(BASE, M2_PAGE))
+M3_EXISTS = os.path.isfile(os.path.join(BASE, M3_PAGE))
 
 # ════════════════════════════════════════════════════════════════
 #  SIDEBAR
@@ -116,6 +118,12 @@ with st.sidebar:
     if st.button("🔬  Intelligence Lab", key="sb_m2",
                  disabled=not M2_EXISTS):
         st.switch_page(M2_PAGE)
+
+    st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
+
+    if st.button("🚨  Anomaly Detector", key="sb_m3",
+                 disabled=not M3_EXISTS):
+        st.switch_page(M3_PAGE)
 
     st.markdown("""
     <!-- BOTTOM BADGE -->
@@ -362,6 +370,27 @@ html, body, .stApp { font-family: 'Sora', sans-serif !important; }
         0 0 0 1px rgba(245,166,35,0.06) inset;
 }
 
+/* M3 card */
+.card-m3 {
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 10%,
+            rgba(252,129,129,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 20% 80%,
+            rgba(246,173,85,0.10) 0%, transparent 55%),
+        linear-gradient(145deg, #1a0810 0%, #100810 60%, #080608 100%);
+    border: 1px solid rgba(252,129,129,0.22);
+    box-shadow:
+        0 24px 60px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(255,255,255,0.04) inset;
+}
+.card-m3:hover {
+    border-color: rgba(252,129,129,0.5);
+    box-shadow:
+        0 32px 80px rgba(0,0,0,0.7),
+        0 0 80px rgba(252,129,129,0.12),
+        0 0 0 1px rgba(252,129,129,0.06) inset;
+}
+
 /* Accent top strip */
 .card::before {
     content: '';
@@ -372,6 +401,7 @@ html, body, .stApp { font-family: 'Sora', sans-serif !important; }
 }
 .card-m1 { --ca: rgba(99,60,255,0.85); }
 .card-m2 { --ca: rgba(245,166,35,0.85); }
+.card-m3 { --ca: rgba(252,129,129,0.85); }
 
 /* Inner glow orb */
 .card-glow {
@@ -426,6 +456,11 @@ html, body, .stApp { font-family: 'Sora', sans-serif !important; }
     border: 1px solid rgba(245,166,35,0.25);
     box-shadow: 0 0 20px rgba(245,166,35,0.18);
 }
+.icon-m3 {
+    background: rgba(252,129,129,0.12);
+    border: 1px solid rgba(252,129,129,0.3);
+    box-shadow: 0 0 20px rgba(252,129,129,0.2);
+}
 .card-icon-dots {
     display: flex; gap: 5px;
 }
@@ -439,6 +474,9 @@ html, body, .stApp { font-family: 'Sora', sans-serif !important; }
 .dot-m2-a { background:#f5a623; animation-delay:0s; }
 .dot-m2-b { background:#ff3c82; animation-delay:0.3s; }
 .dot-m2-c { background:#fcd34d; animation-delay:0.6s; }
+.dot-m3-a { background:#fc8181; animation-delay:0s; }
+.dot-m3-b { background:#f6ad55; animation-delay:0.3s; }
+.dot-m3-c { background:#f687b3; animation-delay:0.6s; }
 @keyframes dotFade {
     0%,100%{opacity:1;transform:scale(1);}
     50%{opacity:0.3;transform:scale(0.7);}
@@ -452,6 +490,7 @@ html, body, .stApp { font-family: 'Sora', sans-serif !important; }
 }
 .label-m1 { color: #818cf8; }
 .label-m2 { color: #f5a623; }
+.label-m3 { color: #fc8181; }
 .card-label::before {
     content: ''; width: 14px; height: 1px;
     background: currentColor;
@@ -593,6 +632,21 @@ div[data-testid="stButton"]:has(button[key="btn_m2"]) > button:hover {
     box-shadow: 0 10px 40px rgba(245,166,35,0.55) !important;
 }
 
+div[data-testid="stButton"]:has(button[key="btn_m3"]) > button {
+    background: linear-gradient(135deg, #c53030, #fc8181) !important;
+    border: none !important; color: white !important;
+    border-radius: 12px !important; font-weight: 700 !important;
+    font-size: 14px !important; padding: 12px 24px !important;
+    box-shadow: 0 4px 24px rgba(252,129,129,0.4) !important;
+    transition: all 0.25s ease !important;
+    width: 100% !important;
+    letter-spacing: 0.3px !important;
+}
+div[data-testid="stButton"]:has(button[key="btn_m3"]) > button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 40px rgba(252,129,129,0.55) !important;
+}
+
 /* ── Animations ──────────────────────────────────────────── */
 @keyframes rise {
     from { opacity:0; transform:translateY(28px); }
@@ -672,6 +726,15 @@ transition:transform 0.35s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s ease;}
 .cm2:hover{border-color:rgba(245,166,35,0.5);
     box-shadow:0 32px 80px rgba(0,0,0,0.7),0 0 80px rgba(245,166,35,0.12),0 0 0 1px rgba(245,166,35,0.06) inset;
     transform:translateY(-6px);}
+/* M3 */
+.cm3{background:radial-gradient(ellipse 80% 60% at 50% 10%,rgba(252,129,129,0.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 80%,rgba(246,173,85,0.10) 0%,transparent 55%),
+    linear-gradient(145deg,#1a0810 0%,#100810 60%,#080608 100%);
+    border:1px solid rgba(252,129,129,0.22);
+    box-shadow:0 24px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04) inset;}
+.cm3:hover{border-color:rgba(252,129,129,0.5);
+    box-shadow:0 32px 80px rgba(0,0,0,0.7),0 0 80px rgba(252,129,129,0.12),0 0 0 1px rgba(252,129,129,0.06) inset;
+    transform:translateY(-6px);}
 /* Accent lines */
 .cm1::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
     background:linear-gradient(90deg,transparent,rgba(99,60,255,0.85),transparent);
@@ -679,15 +742,20 @@ transition:transform 0.35s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s ease;}
 .cm2::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
     background:linear-gradient(90deg,transparent,rgba(245,166,35,0.85),transparent);
     box-shadow:0 0 16px rgba(245,166,35,0.85);}
+.cm3::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(252,129,129,0.85),transparent);
+    box-shadow:0 0 16px rgba(252,129,129,0.85);}
 /* Glow orbs */
 .glow{position:absolute;width:240px;height:240px;border-radius:50%;pointer-events:none;}
 .gm1{top:-60px;right:-60px;background:radial-gradient(circle,rgba(99,60,255,0.18) 0%,transparent 70%);}
 .gm2{top:-60px;left:-60px;background:radial-gradient(circle,rgba(245,166,35,0.15) 0%,transparent 70%);}
+.gm3{top:-60px;right:-60px;background:radial-gradient(circle,rgba(252,129,129,0.18) 0%,transparent 70%);}
 /* Watermark num */
 .wm{position:absolute;right:24px;bottom:16px;font-size:110px;font-weight:900;
     line-height:1;opacity:0.05;letter-spacing:-3px;pointer-events:none;}
 .wm1{color:rgba(99,60,255,1);}
 .wm2{color:rgba(245,166,35,1);}
+.wm3{color:rgba(252,129,129,1);}
 /* Icon */
 .icon-box{width:46px;height:46px;border-radius:13px;display:flex;
     align-items:center;justify-content:center;font-size:20px;
@@ -696,12 +764,14 @@ transition:transform 0.35s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s ease;}
      box-shadow:0 0 20px rgba(99,60,255,0.2);}
 .ib2{background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.25);
      box-shadow:0 0 20px rgba(245,166,35,0.18);}
+.ib3{background:rgba(252,129,129,0.12);border:1px solid rgba(252,129,129,0.3);
+     box-shadow:0 0 20px rgba(252,129,129,0.2);}
 /* Label */
 .lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;
     text-transform:uppercase;margin-bottom:8px;
     display:flex;align-items:center;gap:7px;}
 .lbl::before{content:'';width:12px;height:1px;background:currentColor;}
-.lm1{color:#818cf8;} .lm2{color:#f5a623;}
+.lm1{color:#818cf8;} .lm2{color:#f5a623;} .lm3{color:#fc8181;}
 /* Title */
 .ttl{font-size:34px;font-weight:800;color:#f0ecff;
     letter-spacing:-0.8px;line-height:1.05;margin-bottom:14px;}
@@ -732,6 +802,14 @@ M2_LIT = {3,7,10,14,17,21,24,28,31,35}
 M2_DOTS = "".join([
     f"<div class='dd {'on' if i in M2_LIT else ''}'></div>"
     for i in range(40)
+])
+
+# M3 — pulse/alert wave visual
+M3_PULSES = "".join([
+    f"<div style='width:8px;height:{h}px;border-radius:2px;"
+    f"background:linear-gradient(180deg,rgba(252,129,129,0.9),rgba(246,173,85,0.4));"
+    f"margin-right:4px;display:inline-block;vertical-align:bottom'></div>"
+    for h in [10,22,14,30,18,26,8,32,20,16,28,12]
 ])
 
 card_m1_html = (
@@ -766,7 +844,23 @@ card_m2_html = (
     "</div></div>"
 )
 
-col1, col2 = st.columns(2)
+card_m3_html = (
+    CARD_CSS +
+    "<div class='card cm3'>"
+    "<div class='glow gm3'></div>"
+    "<div class='wm wm3'>03</div>"
+    "<div class='icon-box ib3'>🚨</div>"
+    "<div class='lbl lm3'>Milestone 03</div>"
+    "<div class='ttl'>Anomaly<br>Detector</div>"
+    f"<div class='bars' style='height:36px'>{M3_PULSES}</div>"
+    "<div class='stats'>"
+    "<div class='st'><div class='sn'>3</div><div class='sl'>Signals</div></div>"
+    "<div class='st'><div class='sn'>90%+</div><div class='sl'>Accuracy</div></div>"
+    "<div class='st'><div class='sn'>AI</div><div class='sl'>Detect</div></div>"
+    "</div></div>"
+)
+
+col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown('<div class="r3">', unsafe_allow_html=True)
     components.html(card_m1_html, height=330, scrolling=False)
@@ -777,10 +871,15 @@ with col2:
     components.html(card_m2_html, height=330, scrolling=False)
     st.markdown('</div>', unsafe_allow_html=True)
 
+with col3:
+    st.markdown('<div class="r3">', unsafe_allow_html=True)
+    components.html(card_m3_html, height=330, scrolling=False)
+    st.markdown('</div>', unsafe_allow_html=True)
+
 # ════════════════════════════════════════════════════════════════
 #  ACTION BUTTONS
 # ════════════════════════════════════════════════════════════════
-b1, b2 = st.columns(2)
+b1, b2, b3 = st.columns(3)
 with b1:
     if st.button("▶  Open Data Explorer", key="btn_m1",
                  disabled=not M1_EXISTS):
@@ -802,6 +901,18 @@ with b2:
             "<p style='font-family:Space Mono,monospace;font-size:9px;"
             "color:#f87171;text-align:center;margin-top:4px;'>"
             "pages/2clustring.py not found</p>",
+            unsafe_allow_html=True
+        )
+
+with b3:
+    if st.button("▶  Open Anomaly Detector", key="btn_m3",
+                 disabled=not M3_EXISTS):
+        st.switch_page(M3_PAGE)
+    if not M3_EXISTS:
+        st.markdown(
+            "<p style='font-family:Space Mono,monospace;font-size:9px;"
+            "color:#f87171;text-align:center;margin-top:4px;'>"
+            "pages/3anomaly_detector.py not found</p>",
             unsafe_allow_html=True
         )
 
