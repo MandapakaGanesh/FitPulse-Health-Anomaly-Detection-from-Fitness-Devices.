@@ -98,6 +98,9 @@ with st.sidebar:
     section[data-testid="stSidebar"] [data-testid="stSidebarNav"],
     div[data-testid="stSidebarNavItems"],
     div[data-testid="stSidebarNavSeparator"] { display: none !important; }
+    /* Ensure sidebar scrolls instead of overlapping */
+    section[data-testid="stSidebar"] { overflow-y: auto !important; }
+    section[data-testid="stSidebar"] > div:first-child { padding-bottom: 16px !important; }
     div[data-testid="stSidebar"] [data-testid="stButton"] > button {
         background: rgba(252,129,129,0.08) !important;
         border: 1px solid rgba(252,129,129,0.2) !important;
@@ -236,7 +239,7 @@ with st.sidebar:
         )
 
     st.markdown("""
-    <div style="position:absolute;bottom:20px;left:0;right:0;padding:0 16px;">
+    <div style="margin-top:20px;padding:0 16px 20px;">
         <div style="background:rgba(252,129,129,0.05);
             border:1px solid rgba(252,129,129,0.1);
             border-radius:10px;padding:10px 12px;text-align:center;">

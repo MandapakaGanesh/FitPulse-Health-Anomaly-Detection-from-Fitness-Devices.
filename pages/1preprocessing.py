@@ -215,6 +215,10 @@ section[data-testid="stSidebar"] {
         linear-gradient(180deg, #07111f 0%, #050d1a 100%);
     border-right: 1px solid rgba(56,189,248,0.1) !important;
     box-shadow: 4px 0 32px rgba(0,0,0,0.5);
+    overflow-y: auto !important;
+}
+section[data-testid="stSidebar"] > div:first-child {
+    padding-bottom: 16px !important;
 }
 
 /* ===== Glass Card ===== */

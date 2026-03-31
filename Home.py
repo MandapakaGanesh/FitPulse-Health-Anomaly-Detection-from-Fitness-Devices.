@@ -16,9 +16,11 @@ BASE      = os.path.dirname(os.path.abspath(__file__))
 M1_PAGE   = "pages/1preprocessing.py"
 M2_PAGE   = "pages/2clustring.py"
 M3_PAGE   = "pages/3anomaly_detector.py"
+M4_PAGE   = "pages/insights_dashboard.py"
 M1_EXISTS = os.path.isfile(os.path.join(BASE, M1_PAGE))
 M2_EXISTS = os.path.isfile(os.path.join(BASE, M2_PAGE))
 M3_EXISTS = os.path.isfile(os.path.join(BASE, M3_PAGE))
+M4_EXISTS = os.path.isfile(os.path.join(BASE, M4_PAGE))
 
 # ════════════════════════════════════════════════════════════════
 #  SIDEBAR
@@ -36,6 +38,10 @@ with st.sidebar:
             linear-gradient(180deg, #09081a 0%, #06050e 100%) !important;
         border-right: 1px solid rgba(99,60,255,0.12) !important;
         box-shadow: 4px 0 40px rgba(0,0,0,0.6) !important;
+        overflow-y: auto !important;
+    }
+    section[data-testid="stSidebar"] > div:first-child {
+        padding-bottom: 20px !important;
     }
     section[data-testid="stSidebar"] * {
         font-family: 'Sora', sans-serif !important;
@@ -125,13 +131,18 @@ with st.sidebar:
                  disabled=not M3_EXISTS):
         st.switch_page(M3_PAGE)
 
+    st.markdown("<div style='height:4px'></div>", unsafe_allow_html=True)
+
+    if st.button("💡  Insights Dashboard", key="sb_m4",
+                 disabled=not M4_EXISTS):
+        st.switch_page(M4_PAGE)
+
     st.markdown("""
     <!-- BOTTOM BADGE -->
-    <div style="position:absolute;bottom:20px;left:0;right:0;
-        text-align:center;padding:0 16px;">
+    <div style="margin-top:24px;padding:0 16px 20px;">
         <div style="background:rgba(99,60,255,0.06);
             border:1px solid rgba(99,60,255,0.12);
-            border-radius:10px;padding:10px 14px;">
+            border-radius:10px;padding:10px 14px;text-align:center;">
             <div style="font-family:'Space Mono',monospace;
                 font-size:8px;color:#2e2a60;letter-spacing:1px;
                 line-height:1.9;">
@@ -647,6 +658,21 @@ div[data-testid="stButton"]:has(button[key="btn_m3"]) > button:hover {
     box-shadow: 0 10px 40px rgba(252,129,129,0.55) !important;
 }
 
+div[data-testid="stButton"]:has(button[key="btn_m4"]) > button {
+    background: linear-gradient(135deg, #166534, #4ade80) !important;
+    border: none !important; color: white !important;
+    border-radius: 12px !important; font-weight: 700 !important;
+    font-size: 14px !important; padding: 12px 24px !important;
+    box-shadow: 0 4px 24px rgba(74,222,128,0.4) !important;
+    transition: all 0.25s ease !important;
+    width: 100% !important;
+    letter-spacing: 0.3px !important;
+}
+div[data-testid="stButton"]:has(button[key="btn_m4"]) > button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 40px rgba(74,222,128,0.55) !important;
+}
+
 /* ── Animations ──────────────────────────────────────────── */
 @keyframes rise {
     from { opacity:0; transform:translateY(28px); }
@@ -735,6 +761,15 @@ transition:transform 0.35s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s ease;}
 .cm3:hover{border-color:rgba(252,129,129,0.5);
     box-shadow:0 32px 80px rgba(0,0,0,0.7),0 0 80px rgba(252,129,129,0.12),0 0 0 1px rgba(252,129,129,0.06) inset;
     transform:translateY(-6px);}
+/* M4 */
+.cm4{background:radial-gradient(ellipse 80% 60% at 20% 20%,rgba(74,222,128,0.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 80%,rgba(56,189,248,0.12) 0%,transparent 55%),
+    linear-gradient(145deg,#081a10 0%,#060e0a 60%,#050a07 100%);
+    border:1px solid rgba(74,222,128,0.22);
+    box-shadow:0 24px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04) inset;}
+.cm4:hover{border-color:rgba(74,222,128,0.5);
+    box-shadow:0 32px 80px rgba(0,0,0,0.7),0 0 80px rgba(74,222,128,0.12),0 0 0 1px rgba(74,222,128,0.06) inset;
+    transform:translateY(-6px);}
 /* Accent lines */
 .cm1::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
     background:linear-gradient(90deg,transparent,rgba(99,60,255,0.85),transparent);
@@ -745,17 +780,22 @@ transition:transform 0.35s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s ease;}
 .cm3::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
     background:linear-gradient(90deg,transparent,rgba(252,129,129,0.85),transparent);
     box-shadow:0 0 16px rgba(252,129,129,0.85);}
+.cm4::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(74,222,128,0.85),transparent);
+    box-shadow:0 0 16px rgba(74,222,128,0.85);}
 /* Glow orbs */
 .glow{position:absolute;width:240px;height:240px;border-radius:50%;pointer-events:none;}
 .gm1{top:-60px;right:-60px;background:radial-gradient(circle,rgba(99,60,255,0.18) 0%,transparent 70%);}
 .gm2{top:-60px;left:-60px;background:radial-gradient(circle,rgba(245,166,35,0.15) 0%,transparent 70%);}
 .gm3{top:-60px;right:-60px;background:radial-gradient(circle,rgba(252,129,129,0.18) 0%,transparent 70%);}
+.gm4{top:-60px;left:-60px;background:radial-gradient(circle,rgba(74,222,128,0.16) 0%,transparent 70%);}
 /* Watermark num */
 .wm{position:absolute;right:24px;bottom:16px;font-size:110px;font-weight:900;
     line-height:1;opacity:0.05;letter-spacing:-3px;pointer-events:none;}
 .wm1{color:rgba(99,60,255,1);}
 .wm2{color:rgba(245,166,35,1);}
 .wm3{color:rgba(252,129,129,1);}
+.wm4{color:rgba(74,222,128,1);}
 /* Icon */
 .icon-box{width:46px;height:46px;border-radius:13px;display:flex;
     align-items:center;justify-content:center;font-size:20px;
@@ -766,12 +806,14 @@ transition:transform 0.35s cubic-bezier(0.34,1.4,0.64,1),box-shadow 0.35s ease;}
      box-shadow:0 0 20px rgba(245,166,35,0.18);}
 .ib3{background:rgba(252,129,129,0.12);border:1px solid rgba(252,129,129,0.3);
      box-shadow:0 0 20px rgba(252,129,129,0.2);}
+.ib4{background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.3);
+     box-shadow:0 0 20px rgba(74,222,128,0.2);}
 /* Label */
 .lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;
     text-transform:uppercase;margin-bottom:8px;
     display:flex;align-items:center;gap:7px;}
 .lbl::before{content:'';width:12px;height:1px;background:currentColor;}
-.lm1{color:#818cf8;} .lm2{color:#f5a623;} .lm3{color:#fc8181;}
+.lm1{color:#818cf8;} .lm2{color:#f5a623;} .lm3{color:#fc8181;} .lm4{color:#4ade80;}
 /* Title */
 .ttl{font-size:34px;font-weight:800;color:#f0ecff;
     letter-spacing:-0.8px;line-height:1.05;margin-bottom:14px;}
@@ -810,6 +852,14 @@ M3_PULSES = "".join([
     f"background:linear-gradient(180deg,rgba(252,129,129,0.9),rgba(246,173,85,0.4));"
     f"margin-right:4px;display:inline-block;vertical-align:bottom'></div>"
     for h in [10,22,14,30,18,26,8,32,20,16,28,12]
+])
+
+# M4 — insights sparkline visual
+M4_SPARKS = "".join([
+    f"<div style='width:8px;height:{h}px;border-radius:2px;"
+    f"background:linear-gradient(180deg,rgba(74,222,128,0.9),rgba(56,189,248,0.4));"
+    f"margin-right:4px;display:inline-block;vertical-align:bottom'></div>"
+    for h in [18,28,22,34,26,30,20,36,24,32,28,38]
 ])
 
 card_m1_html = (
@@ -860,7 +910,23 @@ card_m3_html = (
     "</div></div>"
 )
 
-col1, col2, col3 = st.columns(3)
+card_m4_html = (
+    CARD_CSS +
+    "<div class='card cm4'>"
+    "<div class='glow gm4'></div>"
+    "<div class='wm wm4'>04</div>"
+    "<div class='icon-box ib4'>💡</div>"
+    "<div class='lbl lm4'>Milestone 04</div>"
+    "<div class='ttl'>Insights<br>Dashboard</div>"
+    f"<div class='bars' style='height:40px'>{M4_SPARKS}</div>"
+    "<div class='stats'>"
+    "<div class='st'><div class='sn'>6</div><div class='sl'>KPIs</div></div>"
+    "<div class='st'><div class='sn'>5</div><div class='sl'>Sections</div></div>"
+    "<div class='st'><div class='sn'>PDF</div><div class='sl'>Export</div></div>"
+    "</div></div>"
+)
+
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.markdown('<div class="r3">', unsafe_allow_html=True)
     components.html(card_m1_html, height=330, scrolling=False)
@@ -876,10 +942,15 @@ with col3:
     components.html(card_m3_html, height=330, scrolling=False)
     st.markdown('</div>', unsafe_allow_html=True)
 
+with col4:
+    st.markdown('<div class="r3">', unsafe_allow_html=True)
+    components.html(card_m4_html, height=330, scrolling=False)
+    st.markdown('</div>', unsafe_allow_html=True)
+
 # ════════════════════════════════════════════════════════════════
 #  ACTION BUTTONS
 # ════════════════════════════════════════════════════════════════
-b1, b2, b3 = st.columns(3)
+b1, b2, b3, b4 = st.columns(4)
 with b1:
     if st.button("▶  Open Data Explorer", key="btn_m1",
                  disabled=not M1_EXISTS):
@@ -913,6 +984,18 @@ with b3:
             "<p style='font-family:Space Mono,monospace;font-size:9px;"
             "color:#f87171;text-align:center;margin-top:4px;'>"
             "pages/3anomaly_detector.py not found</p>",
+            unsafe_allow_html=True
+        )
+
+with b4:
+    if st.button("▶  Open Insights Dashboard", key="btn_m4",
+                 disabled=not M4_EXISTS):
+        st.switch_page(M4_PAGE)
+    if not M4_EXISTS:
+        st.markdown(
+            "<p style='font-family:Space Mono,monospace;font-size:9px;"
+            "color:#f87171;text-align:center;margin-top:4px;'>"
+            "pages/insights_dashboard.py not found</p>",
             unsafe_allow_html=True
         )
 
